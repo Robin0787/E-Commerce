@@ -9,9 +9,20 @@ const Shop = () => {
     
     // Adding the ordered Item to the cart and to the localStorage.
     function addToCart (ordProduct) {
-        setOrderedProducts((prev) => {
-            return [...prev, ordProduct];
-        });
+        const isExists = orderedProducts.find(pd => pd.id === ordProduct.id);
+        if(!!isExists){
+            orderedProducts.forEach(pd => {
+                if(pd.id === ordProduct.id) {
+                    pd.quantity++;
+                    setOrderedProducts((prev) => [...prev]);
+                }
+            })
+        }
+        else {
+            setOrderedProducts((prev) => {
+                return [...prev, ordProduct];
+            });
+        }
         setData(ordProduct);
     }
 
@@ -27,7 +38,7 @@ const Shop = () => {
         .then(res => res.json())
         .then(data => setProducts(data));
         // Setting the data to orderedProducts state from localStorage to display for the first time
-        setOrderedProducts(getData());
+        // setOrderedProducts(getData());
     }, []);
 
     return (
@@ -40,7 +51,7 @@ const Shop = () => {
                 }
             </article>
             <article className='ordered-products'>
-                <OrderedProducts orderedProducts={orderedProducts} clearCart={clearCart}/>
+                <OrderedProducts orderedProducts={getData()} clearCart={clearCart}/>
             </article>
         </section>
     );

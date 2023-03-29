@@ -1,9 +1,22 @@
 
 
 const setData = (newProduct) => {
-    const allProducts = getData();
-    localStorage.setItem('Ordered-Products', JSON.stringify([...allProducts, newProduct]));
+    let allProducts = getData();
+    const isExists = allProducts.find(pd => pd.id === newProduct.id);
+    if(isExists){
+        allProducts.forEach(pd => {
+            if(pd.id === newProduct.id) {
+                pd.quantity++;
+            }
+        })
+    }
+    else {
+        newProduct.quantity = 1;
+        allProducts = [...allProducts, newProduct];
+    }
+    localStorage.setItem('Ordered-Products', JSON.stringify(allProducts));
 }
+
 
 const getData = () => {
     let allData = [];

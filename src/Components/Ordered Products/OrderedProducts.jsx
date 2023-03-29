@@ -2,7 +2,8 @@ import React from 'react';
 import "./OrderedProducts.css";
 
 const OrderedProducts = ({orderedProducts,clearCart}) => {
-    const totalPrice = orderedProducts.reduce((prev,current) => prev + current.price ,0);
+    const quantity = orderedProducts.reduce((prev, current) => prev + current.quantity,0);
+    const totalPrice = orderedProducts.reduce((prev,current) => prev + (current.price * current.quantity) ,0);
     const shippingCharge = orderedProducts.reduce((prev,current) => prev + current.shipping ,0)
     const tax = ((totalPrice * 7) / 100).toFixed(2);
     const grandTotal = totalPrice + shippingCharge + parseFloat(tax);
@@ -10,7 +11,7 @@ const OrderedProducts = ({orderedProducts,clearCart}) => {
         <div className='all-products'>
             <h1 className='header'>Order Summary</h1>
             <ul className='cart-list'>
-                <li>Selected Items : {orderedProducts.length}</li>
+                <li>Quantity : {quantity}</li>
                 <li>Total Price : ${totalPrice}</li>
                 <li>Total Shipping Charge : ${shippingCharge}</li>
                 <li>Tax : ${tax}</li>
