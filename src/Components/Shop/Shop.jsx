@@ -44,6 +44,6 @@ const Shop = () => {
             </article>
         </section>
     );
-};
+};np
 
 export default Shop;
