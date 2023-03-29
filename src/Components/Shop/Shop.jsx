@@ -6,14 +6,22 @@ import "./Shop.css";
 const Shop = () => {
     const [products, setProducts] = useState([]);
     const [orderedProducts, setOrderedProducts] = useState([]);
-
+    
+    // Adding the ordered Item to the cart and to the localStorage.
     function addToCart (ordProduct) {
         setOrderedProducts((prev) => {
             return [...prev, ordProduct];
         });
         setData(ordProduct);
     }
-    // Fetching all data.
+
+    // Clearing all the items of the cart and the localStorage.
+    function clearCart() {
+        setOrderedProducts([]);
+        localStorage.clear();
+    }
+
+    // Fetching all the data of products.
     useEffect(() => {
         fetch('products.json')
         .then(res => res.json())
@@ -32,7 +40,7 @@ const Shop = () => {
                 }
             </article>
             <article className='ordered-products'>
-                <OrderedProducts orderedProducts={orderedProducts} />
+                <OrderedProducts orderedProducts={orderedProducts} clearCart={clearCart}/>
             </article>
         </section>
     );
