@@ -19,6 +19,7 @@ const Shop = () => {
             })
         }
         else {
+            ordProduct.quantity = 1;
             setOrderedProducts((prev) => {
                 return [...prev, ordProduct];
             });
@@ -37,9 +38,10 @@ const Shop = () => {
         fetch('products.json')
         .then(res => res.json())
         .then(data => setProducts(data));
-        // Setting the data to orderedProducts state from localStorage to display for the first time
-        // setOrderedProducts(getData());
     }, []);
+    useEffect(() => {
+        setOrderedProducts(getData());
+    },[products]);
 
     return (
         <section className='shop-container'>
@@ -51,7 +53,8 @@ const Shop = () => {
                 }
             </article>
             <article className='ordered-products'>
-                <OrderedProducts orderedProducts={getData()} clearCart={clearCart}/>
+                {/* <OrderedProducts orderedProducts={getData()} clearCart={clearCart}/> */}
+                <OrderedProducts orderedProducts={orderedProducts} clearCart={clearCart}/>
             </article>
         </section>
     );
